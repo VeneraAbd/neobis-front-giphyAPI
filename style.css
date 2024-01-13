@@ -35,7 +35,7 @@
     align-items: center;
     justify-content: space-between;
 }
-input[type="search"]{
+input[type="text"]{
     border: none;
     outline: none;
 }
@@ -49,11 +49,12 @@ input[type="search"]{
 .main{
     display: grid;
     grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 1fr;
     gap: 20px;
     margin: 20px;
 }
 .card{
-    border: 1px solid orange;
+    width: 100%;
     height: 240px;
 }
 
