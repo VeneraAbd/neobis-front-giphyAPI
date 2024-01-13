@@ -1,7 +1,8 @@
 const search_word = document.querySelector('#search_input');
 const search_icon = document.querySelector('.icon');
 const gifContainer = document.querySelector('.main');
-// const debounceTime = 300;
+const debounceTime = 300;
+let debounceTimer;
 
 async function fetchGiphyAPI(){
 
@@ -9,10 +10,8 @@ async function fetchGiphyAPI(){
         let response = await fetch(`https://api.giphy.com/v1/gifs/search?api_key=WfXZgy5VyrhNFs5tGQPEo7kz4dlrwzA5&q=${search_word.value}`);
         let data = await response.json();
 
-        // clearing the previous Gifs
         gifContainer.innerHTML = '';
        
-        // rendering GIFs
         data.data.forEach(gif => {
             const card = document.createElement('img');
             card.src = gif.images.fixed_height.url;
@@ -27,7 +26,10 @@ async function fetchGiphyAPI(){
     }
 };
 
-// const debouncedFetchGIFs = _.debounce(fetchGiphyAPI, debounceTime);
+function debounceFetchGIFs() {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(fetchGiphyAPI, debounceTime);
+  }
 
-search_word.addEventListener('input', fetchGiphyAPI);
-search_icon.addEventListener('click', fetchGiphyAPI);
+search_word.addEventListener('input', debounceFetchGIFs);
+search_icon.addEventListener('click', debounceFetchGIFs);
